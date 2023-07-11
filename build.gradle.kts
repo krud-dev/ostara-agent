@@ -15,7 +15,6 @@ plugins {
 }
 
 group = "dev.ostara"
-version = "0.12.0-SNAPSHOT"
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
@@ -92,7 +91,6 @@ sonar {
 }
 
 if (hasProperty("release")) {
-  val effectiveVersion = (findProperty("releaseVersion") ?: version).toString()
   val isSnapshot = version.toString().endsWith("-SNAPSHOT")
   if (!isSnapshot) {
     java {
@@ -131,9 +129,9 @@ if (hasProperty("release")) {
       artifact(tasks.bootJar.get().archiveFile)
       artifact(tasks.named<Zip>("zipJar").get().archiveFile)
       from(components["java"])
-      version = effectiveVersion
+      version = project.version.toString()
       pom {
-        version = effectiveVersion
+        version = project.version.toString()
         description.set("The Spring Client for Ostara, a cross-platform desktop app for managing and monitoring Spring Boot applications using the Actuator API, providing comprehensive insights and effortless control.")
         url.set("https://github.com/krud-dev/ostara")
         licenses {

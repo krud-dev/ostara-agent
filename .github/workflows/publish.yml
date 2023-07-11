@@ -36,11 +36,16 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            VERSION=$(./gradlew -q printVersion)
-            VERSION=${VERSION%-SNAPSHOT}
-            VERSION=${VERSION}.${{ github.event.number }}-SNAPSHOT
+            VERSION=${{ github.sha }}.${{ github.event.number }}-PR-SNAPSHOT
             ./gradlew -Prelease -PreleaseVersion=$VERSION bootJar publishToSonatype
           else
-            ./gradlew -Prelease bootJar publishToSonatype closeSonatypeStagingRepository
+            if [ "${{ github.ref_type }}" = "tag" ]; then
+              VERSION=${{ github.ref_name }}
+              VERSION=${VERSION:1}
+            else 
+              VERSION=${{ github.sha }}-SNAPSHOT
+            fi
+            echo "Deploying version $VERSION"
+            ./gradlew -Prelease -Pversion=$VERSION bootJar publishToSonatype closeSonatypeStagingRepository
           fi
           
