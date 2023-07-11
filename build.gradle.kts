@@ -84,7 +84,7 @@ springBoot {
 
 sonar {
   properties {
-    property("sonar.projectKey", "ostara-agent")
+    property("sonar.projectKey", "krud-dev_ostara-agent")
     property("sonar.organization", "krud-dev")
     property("sonar.host.url", "https://sonarcloud.io")
   }
@@ -177,11 +177,5 @@ if (hasProperty("release")) {
         sign(publishing.publications["maven"])
       }
     }
-  }
-}
-
-tasks.create("printVersion") {
-  doLast {
-    println(version)
   }
 }
