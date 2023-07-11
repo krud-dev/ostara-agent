@@ -169,8 +169,8 @@ if (hasProperty("release")) {
 
     signing {
       useInMemoryPgpKeys(
+        null,
         extra["signingKey"].toString(),
-        extra["signingKeyId"].toString(),
         extra["signingPassword"].toString(),
       )
       if (!isSnapshot) {
