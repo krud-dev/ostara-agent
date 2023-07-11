@@ -12,7 +12,7 @@ start() {
     exit 1
   fi
   echo "Starting agent..."
-  nohup java -jar ##PREFIX##/ostara-agent.jar --spring.config.location $agentYml >$ostaraDir/agent.log 2>&1 &
+  nohup java -jar ##PREFIX##/ostara-agent.jar --spring.config.additional-location $agentYml >$ostaraDir/agent.log 2>&1 &
   echo "Agent started at PID $!, logs at $ostaraDir/agent.log"
   exit 0
 }

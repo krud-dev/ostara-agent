@@ -1,0 +1,30 @@
+#server:
+#  ssl:
+#    certificate-private-key: <path-to-private-key-pem>
+#    certificate: <path-to-certificate-pem>
+ostara:
+  agent:
+    main:
+      api-key: ###REPLACE_ME###
+    service-discovery:
+      internal:
+        enabled: true
+#      kubernetes:
+#        enabled: true
+#        kubeConfigPath: <path-to-kube-config> # OPTIONAL, uses default kube config if not provided
+#        kubeConfigYaml: <kube-config-yaml> # OPTIONAL, uses default kube config if not provided, takes precedence over kubeConfigPath
+#        namespace: default # OPTIONAL, uses default namespace if not provided
+#        actuatorPath: /actuator # OPTIONAL, uses /actuator if not provided
+#        managementPortName: management # OPTIONAL, the name of the endpoint port in kubernetes pointing to actuator, in case there is more than one port. Uses management if not provided
+#        scheme: http # Uses http if not provided
+#        podLabels: # OPTIONAL, does not filter by labels if not provided
+#            key1: value1
+#            key2: value2
+#      zookeeper:
+#        enabled: false
+#        connection-string: some-url:2181,another-url:2181,etc:2181
+#        rootNode: /services
+#        metadata:
+#          key1: value1
+#          key2: value2
+#        actuatorPath: /actuator

@@ -1,1 +1,1 @@
-rootProject.name = "agent"
+rootProject.name = "ostara-agent"
