@@ -1,0 +1,10 @@
+server:
+  port: 14444
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    loadbalancer:
+      enabled: false
+    zookeeper:
+      enabled: false
