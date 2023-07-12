@@ -9,7 +9,8 @@ import java.nio.file.Path
 import java.util.*
 import kotlin.system.exitProcess
 
-val configPath = Path.of(System.getProperty("user.home"), ".ostara", "agent.yml")
+val configPath = System.getProperty("config.file")?.let { Path.of(it) }
+    ?: Path.of(System.getProperty("user.home"), ".ostara", "agent.yml")
 
 object Commands {
     class Setup : Subcommand("setup", "Sets up the agent with initial configuration") {
@@ -40,7 +41,7 @@ object Commands {
                 println("Agent not setup, run setup first")
                 exitProcess(1)
             }
-            dev.ostara.agent.main(args + arrayOf("--spring.config.location=$configPath"))
+            dev.ostara.agent.main(args + arrayOf("--spring.config.additional-location=$configPath"))
         }
     }
 
