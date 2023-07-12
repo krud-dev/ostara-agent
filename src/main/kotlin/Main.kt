@@ -18,7 +18,7 @@ object Commands {
         override fun execute() {
             val file = configPath.toFile()
             if (file.exists() && force != true) {
-                println("Agent already setup, rerun with --force to overwrite")
+                println("Agent already setup in ${configPath}, rerun with --force to overwrite")
                 exitProcess(1)
             } else {
                 println("Setting up agent config")
@@ -27,11 +27,18 @@ object Commands {
                     println("Failed to find template")
                     exitProcess(1)
                 }
-                val replaced = template.replace("###REPLACE_ME###", UUID.randomUUID().toString())
+                val apiKey = UUID.randomUUID().toString()
+                val replaced = template.replace("###REPLACE_ME###", apiKey)
                 file.parentFile.mkdirs()
                 file.createNewFile()
                 file.writeText(replaced)
-                println("Agent config written to $configPath")
+                println("""
+                    Agent config written successfully
+                    What next?
+                    1. Edit the configuration file at $configPath
+                    1. In the Ostara, create a new agent with the API key $apiKey
+                    2. Start the agent with the command `ostara-agent start` or with `brew services start ostara-agent`
+                """.trimIndent())
             }
         }
     }
