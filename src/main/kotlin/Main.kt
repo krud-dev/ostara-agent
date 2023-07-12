@@ -36,8 +36,9 @@ object Commands {
                     Agent config written successfully
                     What next?
                     1. Edit the configuration file at $configPath
-                    1. In the Ostara, create a new agent with the API key $apiKey
                     2. Start the agent with the command `ostara-agent start` or with `brew services start ostara-agent`
+                    3. In the Ostara app, create a new agent with the the following URL: http://<CURRENT_HOST>:14444
+                        a. If you configured SSL, replace http with https and use the API key $apiKey
                 """.trimIndent())
             }
         }
