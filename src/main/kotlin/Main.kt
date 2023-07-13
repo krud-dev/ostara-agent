@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.system.exitProcess
 
 val configPath = System.getProperty("config.file")?.let { Path.of(it) }
-    ?: Path.of(System.getProperty("user.home"), ".ostara", "agent.yml")
+    ?: Path.of(System.getProperty("user.home"), ".ostara", "agent.properties")
 
 object Commands {
     class Setup : Subcommand("setup", "Sets up the agent with initial configuration") {
