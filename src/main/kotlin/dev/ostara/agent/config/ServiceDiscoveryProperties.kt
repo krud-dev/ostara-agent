@@ -1,5 +1,6 @@
 package dev.ostara.agent.config
 
+import dev.ostara.agent.model.RegistrationRequestDTO
 import dev.ostara.agent.util.CONFIGURATION_PREFIX
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.NestedConfigurationProperty
@@ -28,6 +29,7 @@ class ServiceDiscoveryProperties {
     val enabled: Boolean
     data class Internal(
       override val enabled: Boolean = true,
+      var instances: List<RegistrationRequestDTO> = emptyList()
     ) : ServiceDiscovery
     data class Kubernetes(
       override val enabled: Boolean = false,

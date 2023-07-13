@@ -5,4 +5,22 @@ const val AGENT_KEY_HEADER = "X-Ostara-Key"
 const val CONFIGURATION_PREFIX = "ostara.agent"
 
 const val PROXY_INSTANCE_ID_HEADER = "X-Ostara-InstanceId"
-val PROXY_HEADERS_TO_REMOVE = listOf(PROXY_INSTANCE_ID_HEADER, "Host", "User-Agent", "Connection")
+val IGNORED_REQUEST_HEADERS = listOf(
+    AGENT_KEY_HEADER,
+    PROXY_INSTANCE_ID_HEADER,
+    "Host",
+    "Connection",
+    "Keep-Alive",
+    "Proxy-Authenticate",
+    "Proxy-Authorization",
+    "TE",
+    "Trailer",
+    "Transfer-Encoding",
+    "Upgrade"
+)
+
+val IGNORED_RESPONSE_HEADERS = listOf(
+    "Content-Length",
+    "Transfer-Encoding",
+    "Connection",
+)
