@@ -1,4 +1,6 @@
-#server:
+server:
+  port: 14444
+#  forward-headers-strategy: framework # Reverse proxy configuration
 #  ssl:
 #    certificate-private-key: <path-to-private-key-pem>
 #    certificate: <path-to-certificate-pem>
