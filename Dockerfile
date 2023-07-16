@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk:17-latest as build
+FROM azul/zulu-openjdk:20-latest as build
 ARG VERSION=unspecified
 WORKDIR /tmp
 COPY gradle/ gradle/
@@ -12,7 +12,7 @@ RUN ./gradlew --console=plain \
     -Pversion=${VERSION}-DOCKER \
     bootJar
 
-FROM azul/zulu-openjdk:17-latest as run
+FROM azul/zulu-openjdk:20-latest as run
 WORKDIR /app
 COPY --from=build /tmp/build/libs/ostara-agent.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar", "--spring.profiles.active=docker"]
