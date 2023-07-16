@@ -162,7 +162,6 @@ if (hasProperty("release")) {
 
     signing {
       useInMemoryPgpKeys(
-        null,
         properties["signingKey"].toString(),
         properties["signingPassword"].toString(),
       )
