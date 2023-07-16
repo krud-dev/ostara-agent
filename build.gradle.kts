@@ -71,9 +71,15 @@ tasks.jacocoTestReport {
   }
 }
 
+val mainClassName = if (hasProperty("docker")) {
+  "dev.ostara.agent.AgentApplicationKt"
+} else {
+  "MainKt"
+}
+
 tasks.bootJar {
   archiveFileName.set("ostara-agent.jar")
-  mainClass.set("MainKt")
+  mainClass.set(mainClassName)
 }
 
 tasks.jar {
@@ -101,20 +107,6 @@ if (hasProperty("release")) {
     }
   }
 
-  tasks.create<Zip>("zipJar") {
-    dependsOn("bootJar")
-    archiveFileName.set("agent-$version.zip")
-    from(tasks.bootJar.get().archiveFile)
-    from("scripts") {
-      include("ostara-agent")
-    }
-    destinationDirectory.set(file(buildDir.resolve("dist")))
-  }
-
-  tasks.withType<PublishToMavenRepository> {
-    dependsOn(tasks.bootJar, tasks.named("zipJar"))
-  }
-
   nexusPublishing {
     this@nexusPublishing.repositories {
       sonatype {
@@ -129,7 +121,6 @@ if (hasProperty("release")) {
   publishing {
     publications.create<MavenPublication>("maven") {
       artifact(tasks.bootJar.get().archiveFile)
-      artifact(tasks.named<Zip>("zipJar").get().archiveFile)
       from(components["java"])
       version = project.version.toString()
       pom {
