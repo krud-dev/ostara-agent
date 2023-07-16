@@ -33,4 +33,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ steps.determine-version.outputs.version }}
           tags: ${{ secrets.DOCKER_USERNAME }}/ostara-agent:${{ steps.determine-version.outputs.version }},${{ secrets.DOCKER_USERNAME }}/ostara-agent:latest
