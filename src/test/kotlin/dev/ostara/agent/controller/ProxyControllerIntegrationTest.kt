@@ -11,6 +11,7 @@ import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpMethod
+import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.MockMvc
@@ -33,21 +34,10 @@ class ProxyControllerIntegrationTest {
   private lateinit var restTemplate: RestTemplate
 
   @Test
-  fun `doCall should return 400 if header is missing`() {
-    mockMvc.get(
-      "/api/v1/proxy/health"
-    ).andExpect {
-      status { isBadRequest() }
-    }
-  }
-
-  @Test
   fun `doCall should return 404 if instance id isn't found`() {
     mockMvc.get(
-      "/api/v1/proxy/health"
-    ) {
-      header("X-Ostara-InstanceId", "someApp-someHost")
-    }.andExpect {
+      "/api/v1/proxy/someApp-someHost/health"
+    ).andExpect {
       status { isNotFound() }
     }
   }
@@ -67,18 +57,14 @@ class ProxyControllerIntegrationTest {
 
     whenever(
       restTemplate.exchange(
-        eq("http://localhost:13333/actuator/health"),
-        eq(HttpMethod.GET),
         any(),
         eq(String::class.java)
       )
     ).thenReturn(ResponseEntity.ok("OK"))
 
     mockMvc.get(
-      "/api/v1/proxy/health"
-    ) {
-      header("X-Ostara-InstanceId", "someApp-someHost")
-    }.andExpect {
+      "/api/v1/proxy/someApp-someHost/health"
+    ).andExpect {
       status { isOk() }
       content { string("OK") }
     }
