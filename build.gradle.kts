@@ -110,8 +110,8 @@ if (hasProperty("release")) {
   nexusPublishing {
     this@nexusPublishing.repositories {
       sonatype {
-        username.set(extra["ossrhUsername"].toString())
-        password.set(extra["ossrhPassword"].toString())
+        username.set(properties["ossrhUsername"].toString())
+        password.set(properties["ossrhPassword"].toString())
         nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
         snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
       }
@@ -163,8 +163,8 @@ if (hasProperty("release")) {
     signing {
       useInMemoryPgpKeys(
         null,
-        extra["signingKey"].toString(),
-        extra["signingPassword"].toString(),
+        properties["signingKey"].toString(),
+        properties["signingPassword"].toString(),
       )
       if (!isSnapshot) {
         sign(publishing.publications["maven"])
