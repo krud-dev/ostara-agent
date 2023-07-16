@@ -8,14 +8,12 @@ import io.fabric8.kubernetes.api.model.EndpointAddress
 import io.fabric8.kubernetes.api.model.EndpointPort
 import io.fabric8.kubernetes.api.model.Endpoints
 import io.fabric8.kubernetes.client.KubernetesClient
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
 @ConditionalOnKubernetesEnabled
 class KubernetesServiceDiscoveryHandlerImpl(
-  @Autowired(required = false)
-  private val kubernetesAwarenessService: KubernetesAwarenessService?,
+  private val kubernetesAwarenessService: KubernetesAwarenessService,
   private val client: KubernetesClient
 ) :
   ServiceDiscoveryHandler<ServiceDiscoveryProperties.ServiceDiscovery.Kubernetes> {
@@ -25,7 +23,7 @@ class KubernetesServiceDiscoveryHandlerImpl(
 
   override fun discoverInstances(config: ServiceDiscoveryProperties.ServiceDiscovery.Kubernetes): List<DiscoveredInstanceDTO> {
     val namespace = config.namespace
-      ?: kubernetesAwarenessService?.getNamespace()
+      ?: kubernetesAwarenessService.resolveNamespace()
       ?: error("Unable to determine namespace! If not running in Kubernetes, please specify the namespace in [ ostara.agent.service-discovery.kubernetes.namespace ]")
     val actuatorPath = config.actuatorPath
     val managementPortName = config.managementPortName
