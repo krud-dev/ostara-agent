@@ -1,5 +1,6 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.*
 
 plugins {
   id("org.springframework.boot") version "3.1.1"
@@ -161,13 +162,18 @@ if (hasProperty("release")) {
     }
 
     signing {
+      val signingKeyBase64: String? by project
+      val signingKey = signingKeyBase64?.let { decodeBase64(it) }
+      val signingPassword: String? by project
       useInMemoryPgpKeys(
-        properties["signingKey"].toString(),
-        properties["signingPassword"].toString(),
+        signingKey,
+        signingPassword
       )
-      if (!isSnapshot) {
-        sign(publishing.publications["maven"])
-      }
+      sign(publishing.publications["maven"])
     }
   }
+}
+
+fun decodeBase64(base64: String): String {
+  return String(Base64.getDecoder().decode(base64))
 }
