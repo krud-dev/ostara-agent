@@ -9,7 +9,7 @@ COPY src/ src/
 
 RUN ./gradlew --console=plain \
     -Pdocker \
-    -Pversion=${VERSION}-DOCKER \
+    -Pversion=${VERSION} \
     bootJar
 
 FROM azul/zulu-openjdk:17-latest as run
