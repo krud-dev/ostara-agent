@@ -40,7 +40,7 @@ dependencies {
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("io.strikt:strikt-core:0.34.1")
   testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
-  testImplementation("org.testcontainers:testcontainers:1.18.3")
+  testImplementation("org.testcontainers:testcontainers:1.20.3")
   testImplementation("org.apache.curator:curator-test:5.5.0")
   testImplementation("io.fabric8:kubernetes-server-mock")
 }
